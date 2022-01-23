@@ -1,42 +1,163 @@
-# Blackjack game python implementation.
-# This file including all the classes.
+"""Blackjack game python implementation.
+
+This file including all the classes of the Blackjack Game:
+----------------------------------------------------------
+Card: The card class.
+Deck: A deck of card.
+Dealer: The dealer class.
+Player: The player class.
+Bot: The computer oponet class.
+Game: The game class.
+
+"""
+
 import random
 
-# Card class.
 class Card:
+    """
+    The model of each card that is played.
+    
+    ...
+    
+    Attributes
+    ----------
+    suit: str
+    rank: str
+    
+    Methods
+    -------
+    __init__(suit, rank)
+        Initialize the card with "suit" and "rank".
+    getSuit()
+    getRank()
+    getString()
+        Printing "suit" and "rank".
 
+    """
+    
     def __init__(self, suit, rank):
+        """
+        Parameters
+        ----------
+        suit : str
+            The suit of the card.
+        rank : str
+            The rank of the card.
+
+        Returns
+        -------
+        none
+        """
 
         self.suit = suit
         self.rank = rank
 
     def getSuit(self):
+        """
+        Returns
+        -------
+        The suit of the the card.
+        """
 
         return self.suit
 
     def getRank(self):
+        """
+        Returns
+        -------
+        The rank of the the card.
+        """
 
         return self.rank
 
     def getString(self):
+        """
+        Returns
+        -------
+        A string combining the rank and the suit of the card.
+        """
 
         return self.suit + " " + self.rank + "; "
 
-class Deck:
 
-    suits = ('Hearts', 'Diamonds', 'Spades', 'Clubs')
-    ranks = ('Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine','Ten',
-        'Jack', 'Queen', 'King', 'Ace')
+
+    
+class Deck:
+    """
+    The class of a deck of 52 cards.
+    
+    ...
+
+    Attributes
+    ----------
+    suits : list
+        A list of suits.
+    ranks : list
+        A list of ranks.
+    values : dictionary
+        The list of string and number pairs that are using to map the ranks to integers.
+    cards : list
+        A list of card objects.
+    
+    Methods
+    -------
+    shuffle()
+        Put all the cards in the list into random order.
+    dealOneCard()
+        Pop one card from the card list and return it.
+    getCardValue(rank)
+        Get the numeric value of a rank string.
+    getCardsCount()
+        Return the length of the cards list.
+    hasNoCard()
+        Check if the cards list is empty.
+    printCards()
+        Printing the strings of each card in the list.
+
+    """
+    
+    suits = ['Hearts', 'Diamonds', 'Spades', 'Clubs']
+    ranks = ['Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine','Ten',
+        'Jack', 'Queen', 'King', 'Ace']
     values = {'Two':2, 'Three':3, 'Four':4, 'Five':5, 'Six':6, 'Seven':7, 'Eight':8,
         'Nine':9, 'Ten':10, 'Jack':10, 'Queen':10, 'King':10, 'Ace':11}
 
     def __init__(self):
+        """
+        The initialization method.
+        Set the cards list to empty.
 
+        ...
+
+        Parameters
+        ----------
+        none
+
+        Returns
+        -------
+        none
+        
+        """
+        
         self.cards = []
 
-    # Generate a new deck of cards and shuffle it.
+    # Shuffle the deck of card into random order.
     def shuffle(self):
+        """
+        Shuffle the cards list into random order.
 
+        ...
+
+        Parameters
+        ----------
+        none
+
+        Returns
+        -------
+        none
+
+        """
+        
         self.cards = []
 
         for s in self.suits:
@@ -49,27 +170,96 @@ class Deck:
 
     # Pop one card from array.
     def dealOneCard(self):
+        """
+        Pop one from cards list and return it.
 
+        ...
+
+        Returns
+        -------
+        card
+
+        """
+        
         return self.cards.pop()
 
     # Get the numeric value of a given rank.
-    def getCardValue(self, ranks):
+    def getCardValue(self, rank):
+        """
+        Get the numeric mapping of a given rank.
 
-        return self.values[ranks]
+        ...
+
+        Parameters
+        ----------
+        rank : str
+
+        Returns
+        -------
+        values[rank] : Integer
+
+        """
+
+        return self.values[rank]
 
     # Return the number of cards that left in the array.
     def getCardsCount(self):
+        """
+        Get the number of cards in the array.
 
+        ...
+    
+        Parameters
+        ----------
+        none
+        
+        Returns
+        -------
+        len(self.cards) : Integer
+
+        """
+        
         return len(self.cards)
 
     # If the cards array is emptly, return true.
     def hasNoCard(self):
+        """
+        Check if the array is empty.
 
+        ...
+
+        Parameters
+        ----------
+        none
+
+        ...
+
+        Returns
+        -------
+        not self.cards : boolean
+            If the array is empty return true, otherwise return false.
+
+        """
+        
         return not self.cards
 
     # Print all the cards stored in the array.
     def printCards(self):
+        """
+        To print the information about each card in the array.
 
+        ...
+
+        Parameters
+        ----------
+        none
+
+        Returns
+        -------
+        none
+
+        """
+        
         num = 1
 
         for c in self.cards:
@@ -78,46 +268,182 @@ class Deck:
 
 # Dealer class
 class Dealer:
+    """
+    The dealer class.
 
+    ...
+
+    Attributes
+    ----------
+    name : str
+        The str representation of the object (default "Dealer").
+    cards : list
+        A list of cards that dealer has.
+
+    ...
+
+    Methods
+    -------
+    getName()
+        Return the name of the object.
+    showCards()
+        Show the first two cards of dealers'.
+    showAllCards()
+        Show all the cards in dealer's hands.
+    addCard(card)
+        Appending one card to the cards arry.
+    getCards()
+        Return the cards array.
+    reset()
+        Reset the cards array to empty.
+    
+    """
+    
     def __init__(self):
+        """
+        Parameters
+        ----------
+        none
+
+        Returns
+        -------
+        none
+        
+        """
 
         self.cards = []
         self.name = "Dealer"
 
     def getName(self):
+        """
+        Parameters
+        ----------
+        none
 
+        Returns
+        -------
+        self.name : str
+        
+        """
+        
         return self.name
 
     def showCards(self):
+        """
+        Parameters
+        ----------
+        none
 
+        Returns
+        -------
+        none
+        
+        """
+        
         card = self.cards[0]
         print("1. {}".format(card.getString()))
         print("2. **hidden**")
 
     def showAllCards(self):
+        """
+        Parameters
+        ----------
+        none
 
+        Returns
+        -------
+        none
+        
+        """
+        
         num = 1
         for c in self.cards:
             print("{}. {}".format(num, c.getString()))
             num = num + 1
 
     def addCard(self, card):
+        """
+        Parameters
+        ----------
+        card : Card
 
+        Returns
+        -------
+        none
+        
+        """
+        
         self.cards.append(card)
 
     def getCards(self):
-
+        """
+        Parameters
+        ----------
+        none
+        
+        Returns
+        -------
+        none
+        
+        """
+        
         return self.cards
 
     # Empty cards array.
     def reset(self):
-
+        """
+        Parameters
+        ----------
+        none
+        
+        Returns
+        -------
+        none
+        
+        """
+        
         self.cards = []
 
 # Player class
 class Player:
+    """
+    The player class.
+    
+    ...
+    
+    Attributes
+    ----------
+    name : string
+    money : integer
+    bet : integer
+    cards : array
+    hit : boolean
+    double_downed : boolean
+    split : boolean
 
+    Methods
+    -------
+    setName(name)
+    getName()
+    setMoney(money)
+    getMoney()
+    hasNoMoney()
+        If player has no money left return true, otherwise return false.
+    setHit(hit)
+       If the player choose to hit set hit to true, otherwise set to false.
+    """
     def __init__(self, name, money):
+        """
+        Parameters
+        ----------
+        name : string
+        money : string
+
+        Returns
+        -------
+        none
+        
+        """
 
         self.name = name
         self.money = money
@@ -128,36 +454,78 @@ class Player:
         self.split = False
 
     def setName(self, name):
-
+        """
+        Parameters
+        ----------
+        name : string
+        
+        Returns
+        ------
+        none
+        
+        """
+        
         self.name = name
 
     def getName(self):
-
+        """
+        Prameters
+        ---------
+        none
+        
+        Returns
+        -------
+        self.name : string
+        
+        """
+        
         return self.name
 
     def setMoney(self, money):
+        """
+        Parameters
+        ----------
+        money : integer
 
+        Returns
+        -------
+        none
+
+        """
+        
         self.money = money
 
     def getMoney(self):
+        """
+        Parameters
+        ----------
+        none
 
+        Returns
+        -------
+        self.money : integer
+
+        """
+        
         return self.money
 
     def hasNoMoney(self):
+        """
 
+        """
         return not self.money
 
-    def setHit(self):
+    def setHit(self, hit = True):
 
-        self.hit = True
+        self.hit = hit
 
     def isHit(self):
 
         return self.hit
 
-    def setSplit(self):
+    def setSplit(self, split = False):
 
-        self.split = True
+        self.split = split
 
     # Check if the object is splited from the other player object.
     def isSplit(self):
